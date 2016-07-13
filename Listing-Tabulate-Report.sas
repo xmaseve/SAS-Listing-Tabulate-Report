@@ -217,6 +217,10 @@ group by salesrep, type, month
 order by salesrep, month;
 quit;
 
+proc gchart data=jen;
+	vbar type / sumvar=total type=sum group=salesrep;
+run;
+
 %let rep='Garcia';
 %let type='Standard';
 
