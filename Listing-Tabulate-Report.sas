@@ -208,7 +208,23 @@ proc tabulate data=year_sales;
 	table salesrep*(quarter all) all, (units amountsold*f=dollar14.2);
 run;
 
+/*plot total units of two types every month of each sales representatives*/
+proc sql;
+create table jen as
+select salesrep, type, month, sum(units)as total
+from year_sales
+group by salesrep, type, month
+order by salesrep, month;
+quit;
 
+%let rep='Garcia';
+%let type='Standard';
+
+symbol value=dot i=join;
+proc gplot data=jen;
+	where salesrep=&rep and type=&type;
+	plot total*month;
+run;
 
 
 
